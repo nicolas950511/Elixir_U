@@ -1,0 +1,74 @@
+defmodule ParImpar do
+  @moduledoc """
+  Este módulo determina si un número ingresado es PAR o IMPAR mediante diferentes enfoques.
+
+  ## Funcionalidad principal:
+  - Solicita un número al usuario.
+  - Determina si el número es par o impar utilizando múltiples métodos.
+  - Genera un mensaje indicando si el número es par o impar y lo muestra al usuario.
+
+  ## Autor
+  - Nicolás Ortiz
+
+  ## Fecha
+  - Junio del 2024
+
+  ## Licencia
+  - MIT
+  """
+
+  def main do
+    """
+    Ingrese un valor mayor o igual a cero:
+    """
+    |> Util.ingresar(:entero)         # Solicita al usuario ingresar un número entero.
+    |> determinar_par?()             # Determina si el número es par o impar.
+    |> generar_mensaje()             # Genera un mensaje basado en la determinación.
+    |> Util.mostrar_mensaje()        # Muestra el mensaje al usuario.
+  end
+
+  @doc """
+  Determina si un número es par usando una lógica basada en restar 2 recursivamente.
+
+  ## Ejemplo:
+      iex> determinar_par?(4)
+      true
+
+      iex> determinar_par?(5)
+      false
+  """
+  defp determinar_par?(0), do: true
+  defp determinar_par?(1), do: false
+  defp determinar_par?(n), do: determinar_par?(n - 2)
+
+  @doc """
+  Genera un mensaje indicando si un número es par o impar.
+
+  ## Ejemplo:
+      iex> generar_mensaje(true)
+      "El número ingresado es PAR\n"
+
+      iex> generar_mensaje(false)
+      "El número ingresado es IMPAR\n"
+  """
+  defp generar_mensaje(true), do: "El número ingresado es PAR\n"
+  defp generar_mensaje(false), do: "El número ingresado es IMPAR\n"
+
+  @doc """
+  Alternativa para determinar si un número es par usando un enfoque acumulativo.
+  """
+  defp determinar_par?(n), do: determinar_par?(0, n)
+  defp determinar_par?(m, n) when m * 2 == n, do: true
+  defp determinar_par?(m, n) when m * 2 > n, do: false
+  defp determinar_par?(m, n), do: determinar_par?(m + 1, n)
+
+  @doc """
+  Determina si un número es par o impar utilizando una recursión mutua.
+  """
+  defp determinar_par?(0), do: true
+  defp determinar_par?(n), do: determinar_impar?(n - 1)
+  defp determinar_impar?(0), do: false
+  defp determinar_impar?(n), do: determinar_par?(n - 1)
+end
+
+ParImpar.main()
